@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background: url('your-background-image.jpg') no-repeat center center fixed; /* Background image */
+    background: url('free-fire-background.png') no-repeat center center fixed; /* Background image */
     background-size: cover; /* Ensure it covers the whole background */
     color: white; /* Text color */
 }
